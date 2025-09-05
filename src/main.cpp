@@ -3,5 +3,6 @@
 // #include <glm/gtx/norm.hpp>    // <-- remove this (experimental)
 
 int main() {
-    std::cout << "Hello Victor Strom";
+    std::cout << "Hello Victor Strom\n";
+    std::cout << "Well hello there Kurt";
 }
