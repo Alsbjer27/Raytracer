@@ -15,6 +15,8 @@ FetchContent_MakeAvailable(glm)
 
 add_executable(raytracer
   src/main.cpp
+  src/Scene.cpp
+  src/Scene.h
 )
 
 target_link_libraries(raytracer PRIVATE glm::glm)
