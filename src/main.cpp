@@ -1,6 +1,7 @@
 #include <iostream>
 #include <glm/glm.hpp>            // core (vec*, dot, etc.)
 #include "Scene.h"
+#include "Camera.h"
 
 int main() {
     glm::vec3 v0(0, 3, 2);

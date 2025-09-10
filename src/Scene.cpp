@@ -1,10 +1,10 @@
 #include "Scene.h"
 
 
-Scene::Scene(int width, int height)
-{
-
-}
+//Scene::Scene(int width, int height)
+//{
+//
+//}
 
 glm::vec3 Scene::compute_normal(glm::vec3 v0, glm::vec3 v1, glm::vec3 v2)
 {
