@@ -54,6 +54,10 @@ add_executable(raytracer
   src/Scene.h
   src/Camera.h
   src/Camera.cpp
+  src/Ray.cpp
+  src/Ray.h
+  src/Sphere.h
+  src/Sphere.cpp
 )
 
 target_link_libraries(raytracer PRIVATE glm::glm)
