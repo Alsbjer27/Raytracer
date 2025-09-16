@@ -58,6 +58,11 @@ add_executable(raytracer
   src/Ray.h
   src/Sphere.h
   src/Sphere.cpp
+  src/Framebuffer.h
+  src/Framebuffer.cpp
+  src/Triangle.h
+  src/Triangle.cpp
+
 )
 
 target_link_libraries(raytracer PRIVATE glm::glm)

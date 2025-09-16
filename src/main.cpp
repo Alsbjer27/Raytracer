@@ -2,18 +2,27 @@
 #include <glm/glm.hpp>            // core (vec*, dot, etc.)
 #include "Scene.h"
 #include "Camera.h"
+#include "Ray.h"
+#include "Framebuffer.h"
 
 int main() {
-    glm::vec3 v0(0, 3, 2);
-    glm::vec3 v1(2, 3, 2);
-    glm::vec3 v2(4, 5, 1);
 
-    glm::vec3 normal = Scene::compute_normal(v0, v1, v2);
+	int width = 200;
+	int height = 200;
 
-    std::cout << "Normal: ("
-        << normal.x << ", "
-        << normal.y << ", "
-        << normal.z << ")\n";
+	Camera cam(width, height);
+	Framebuffer fb(width, height);
 
-    std::cout << "Length: " << glm::length(normal) << "\n";
+
+	for (int y = 0; y < height; ++y) {
+		for (int x = 0; x < width; ++x) {
+			Ray r = cam.generateRay(x, y);
+			//std::cout << "pixel (" << x << "," << y << "): direction = (" << r.direction.x << ", " << r.direction.y << ", " << r.direction.z << ")\n";
+
+			glm::vec3 color = 0.5f * (r.direction + glm::vec3(1.0f));
+			fb.setPixel(x, y, color);
+		}
+	}
+	fb.savePPM("output.ppm");
+	return 0;
 }
