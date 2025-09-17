@@ -1,14 +1,22 @@
 #pragma once
 #include <iostream>
+#include<vector>
 #include <glm/glm.hpp>
+#include "Triangle.h"
 
 
 
 class Scene
 {
 public:
-	explicit Scene(int width, int height); // Set the resolution
+	Scene(); // Set the resolution
 
-	static glm::vec3 compute_normal(glm::vec3 v0, glm::vec3 v1, glm::vec3 v2);
+	void buildRoom();
+
+	const std::vector<Triangle>& getTriangle() const { return triangles; }
+
+
+private: 
+	std::vector<Triangle> triangles;
 };
 

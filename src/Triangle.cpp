@@ -1,4 +1,4 @@
-#include "Triangle.h"
+﻿#include "Triangle.h"
 
 Triangle::Triangle(const glm::vec3& v0, const glm::vec3& v1, const glm::vec3& v2, const glm::vec3& color)
 : v0(v0), v1(v1), v2(v2), color(color) 
@@ -6,7 +6,7 @@ Triangle::Triangle(const glm::vec3& v0, const glm::vec3& v1, const glm::vec3& v2
 	normal = glm::normalize(cross(v1 - v0, v2 - v0));
 }
 
-bool Triangle::intersect(const Ray& ray, float& t)
+bool Triangle::intersect(const Ray& ray, float& t) const
 {
 	constexpr float EPS = 1e-8; // To compare to
 
@@ -28,6 +28,16 @@ bool Triangle::intersect(const Ray& ray, float& t)
 	if (v < 0.0f || u + v > 1.0f) return false;
 
 	t = glm::dot(edge2, qvec) * invDet;
+
+	if (t > EPS) {
+		// Debug print
+		glm::vec3 hitPoint = ray.atPoint(t);
+		std::cout << "DEBUG: Hit triangle at t=" << t
+			<< " -> Point(" << hitPoint.x << ", "
+			<< hitPoint.y << ", "
+			<< hitPoint.z << ")\n";
+		return true;
+	}
 
 	return t > EPS;
 }

@@ -1,16 +1,34 @@
 #include "Scene.h"
 
 
-Scene::Scene(int width, int height)
-{
+Scene::Scene() {}
 
+void Scene::buildRoom()
+{
+	triangles.clear();
+
+    // floor (grey)
+    triangles.push_back(Triangle({ 0,0,0 }, { 4,4,0 }, { 4,0,0 }, { 0.8f,0.8f,0.8f }));
+    triangles.push_back(Triangle({ 0,0,0 }, { 0,4,0 }, { 4,4,0 }, { 0.8f,0.8f,0.8f }));
+
+    // ceiling (white)
+    triangles.push_back(Triangle({ 0,0,4 }, { 4,4,4 }, { 0,4,4 }, { 0.9f,0.9f,0.9f }));
+    triangles.push_back(Triangle({ 0,0,4 }, { 4,0,4 }, { 4,4,4 }, { 0.9f,0.9f,0.9f }));
+
+    // left wall (red)
+    triangles.push_back(Triangle({ 0,0,0 }, { 0,4,4 }, { 0,4,0 }, { 1.0f,0.0f,0.0f }));
+    triangles.push_back(Triangle({ 0,0,0 }, { 0,0,4 }, { 0,4,4 }, { 1.0f,0.0f,0.0f }));
+
+    // right wall (green)
+    triangles.push_back(Triangle({ 4,0,0 }, { 4,4,4 }, { 4,0,4 }, { 0.0f,1.0f,0.0f }));
+    triangles.push_back(Triangle({ 4,0,0 }, { 4,4,0 }, { 4,4,4 }, { 0.0f,1.0f,0.0f }));
+
+    // back wall (blue)
+    triangles.push_back(Triangle({ 0,0,0 }, { 4,0,4 }, { 0,0,4 }, { 0.0f,0.0f,1.0f }));
+    triangles.push_back(Triangle({ 0,0,0 }, { 4,0,0 }, { 4,0,4 }, { 0.0f,0.0f,1.0f }));
+
+    // front wall (yellow)
+    triangles.push_back(Triangle({ 0,4,0 }, { 4,4,4 }, { 4,4,0 }, { 1.0f,1.0f,0.0f }));
+    triangles.push_back(Triangle({ 0,4,0 }, { 4,4,4 }, { 0,4,4 }, { 1.0f,1.0f,0.0f }));
 }
 
-glm::vec3 Scene::compute_normal(glm::vec3 v0, glm::vec3 v1, glm::vec3 v2)
-{
-    glm::vec3 edge1 = v1 - v0;
-    glm::vec3 edge2 = v2 - v0;
-    glm::vec3 normal = cross(edge1, edge2);
-    
-    return glm::normalize(normal);
-}
