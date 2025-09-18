@@ -4,18 +4,27 @@
 #include <glm/glm.hpp>
 
 
-bool hitShpere(const glm::vec3& center, double radius, const Ray& r) {
+double hitShpere(const glm::vec3& center, double radius, const Ray& r) {
     glm::vec3 originToSphereCenter = center - r.ori;
     auto a = glm::dot(r.dir, r.dir);
     auto b = -2.0 * glm::dot(r.dir, originToSphereCenter);
     auto c = glm::dot(originToSphereCenter, originToSphereCenter) - radius*radius;
     auto discriminant = b * b - 4 * a * c;
-    return (discriminant >= 0);
+    
+    if (discriminant < 0) {
+        return -1.0;
+    }
+    else {
+        return (-b - std::sqrt(discriminant)) / (2.0 * a);
+    }
+
 }
 
 color rayColor(const Ray& r) {
-    if (hitShpere(glm::vec3(0, 0, -1), 0.1, r)) {
-        return color(1, 0, 0);
+    auto t = hitShpere(glm::vec3(0, 0, -1), 0.5, r);
+    if (t > 0.0) {
+        glm::vec3 normal = glm::normalize(r.at(t) - glm::vec3(0, 0, -1));
+        return 0.5f * color(normal.x + 1, normal.y + 1, normal.z + 1);
     }
 
     glm::vec3 normalizedDir = glm::normalize(r.dir);
@@ -53,7 +62,7 @@ int main() {
     auto pixelDeltaV = viewportV / static_cast<float>(imageHeight);
 
     // Position of upper left pixel
-    auto viewportUpperLeft = cameraCenter - glm::vec3(0, 0, focalLenght) - viewportU / 2.0f - viewportV - 2.0f;
+    auto viewportUpperLeft = cameraCenter - glm::vec3(0, 0, focalLenght) - viewportU / 2.0f - viewportV / 2.0f;
     auto topLeftPixelLoc = viewportUpperLeft + 5.0f * (pixelDeltaU + pixelDeltaV);
 
     // Render
