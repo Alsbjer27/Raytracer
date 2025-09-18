@@ -50,19 +50,9 @@ FetchContent_MakeAvailable(glm)
 # --- Targets ---
 add_executable(raytracer
   src/main.cpp
-  src/Scene.cpp
-  src/Scene.h
-  src/Camera.h
-  src/Camera.cpp
-  src/Ray.cpp
+  src/Color.h
   src/Ray.h
-  src/Sphere.h
-  src/Sphere.cpp
-  src/Framebuffer.h
-  src/Framebuffer.cpp
-  src/Triangle.h
-  src/Triangle.cpp
-
+  src/Ray.cpp
 )
 
 target_link_libraries(raytracer PRIVATE glm::glm)
