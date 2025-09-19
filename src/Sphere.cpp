@@ -1,0 +1,34 @@
+#include "Sphere.h"
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/norm.hpp>
+
+Sphere::Sphere(const glm::vec3& center, double radius)
+    : center(center), radius(std::fmax(0,radius)) {
+}
+
+bool Sphere::hit(const Ray& r, double rayTMin, double rayTMax, hitRecord& rec) const
+{
+    glm::vec3 originToSphereCenter = center - r.ori;
+    auto a = glm::length2(r.dir);
+    auto h = glm::dot(r.dir, originToSphereCenter);
+    auto c = glm::length2(originToSphereCenter) - radius * radius;
+    auto discriminant = h * h - a * c;
+
+    if (discriminant < 0) {
+        return -1.0;
+    }
+    auto sqrtd = std::sqrt(discriminant);
+
+
+    auto root = (h - sqrtd) / a;
+    if (root <= rayTMin || rayTMax <= root) {
+        root = (h + sqrtd) / a;
+        if (root <= rayTMin || rayTMax <= root) {
+            return false;
+        }
+        rec.t = root;
+        rec.p = r.at(rec.t);
+        rec.normal = (rec.p - center) / radius;
+        return true;
+    }
+}

@@ -2,20 +2,22 @@
 #include "Color.h"
 #include "Ray.h"
 #include <glm/glm.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/norm.hpp>
 
 
 double hitShpere(const glm::vec3& center, double radius, const Ray& r) {
     glm::vec3 originToSphereCenter = center - r.ori;
-    auto a = glm::dot(r.dir, r.dir);
-    auto b = -2.0 * glm::dot(r.dir, originToSphereCenter);
-    auto c = glm::dot(originToSphereCenter, originToSphereCenter) - radius*radius;
-    auto discriminant = b * b - 4 * a * c;
+    auto a = glm::length2(r.dir);
+    auto h = glm::dot(r.dir, originToSphereCenter);
+    auto c = glm::length2(originToSphereCenter) - radius * radius;
+    auto discriminant = h * h -  a * c;
     
     if (discriminant < 0) {
         return -1.0;
     }
     else {
-        return (-b - std::sqrt(discriminant)) / (2.0 * a);
+        return (h - std::sqrt(discriminant)) / a;
     }
 
 }
