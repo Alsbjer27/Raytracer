@@ -1,6 +1,5 @@
 #pragma once
 #include <glm/glm.hpp>
-#include<iostream>
 
 using color = glm::vec3;
 

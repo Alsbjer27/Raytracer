@@ -25,10 +25,11 @@ bool Sphere::hit(const Ray& r, double rayTMin, double rayTMax, hitRecord& rec) c
         root = (h + sqrtd) / a;
         if (root <= rayTMin || rayTMax <= root) {
             return false;
-        }
-        rec.t = root;
-        rec.p = r.at(rec.t);
-        rec.normal = (rec.p - center) / radius;
-        return true;
+        }  
     }
+    rec.t = root;
+    rec.p = r.at(rec.t);
+    glm::vec3 outwardNormal = (rec.p - center) / static_cast<float>(radius);
+    rec.setFaceNormal(r, outwardNormal);
+    return true;
 }

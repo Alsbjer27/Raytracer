@@ -53,9 +53,13 @@ add_executable(raytracer
   src/Color.h
   src/Ray.h
   src/Ray.cpp
-  src/hittable.h
+  src/Hittable.h
+  src/Hittable.cpp
   src/Sphere.h
   src/Sphere.cpp
+  src/HittableList.cpp
+  src/HittableList.h
+  src/RtWeekend.h
 )
 
 target_link_libraries(raytracer PRIVATE glm::glm)
