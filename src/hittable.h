@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "RtWeekend.h"
 
 class hitRecord {
 public:

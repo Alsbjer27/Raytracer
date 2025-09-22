@@ -1,7 +1,9 @@
 #include "Ray.h"
 
 Ray::Ray()
-{}
+	: ori(0.0f, 0.0f, 0.0f), dir(0.0f, 0.0f, -1.0f) {
+}
+
 
 Ray::Ray(const glm::vec3& origin, const glm::vec3& direction)
 : ori(origin), dir(direction) {}
