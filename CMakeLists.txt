@@ -51,6 +51,7 @@ FetchContent_MakeAvailable(glm)
 add_executable(raytracer
   src/main.cpp
   src/Color.h
+  src/Color.cpp
   src/Ray.h
   src/Ray.cpp
   src/Hittable.h
