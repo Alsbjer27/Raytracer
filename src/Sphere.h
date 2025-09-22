@@ -2,7 +2,7 @@
 #include "Ray.h"
 #include "Hittable.h"
 
-class Sphere : public hittable
+class Sphere : public Hittable
 {
 public:
 	Sphere(const glm::vec3& center, double radius);

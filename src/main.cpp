@@ -1,32 +1,16 @@
-#include <iostream>
-#include "Color.h"
-#include "Ray.h"
+#include "RtWeekend.h"
+#include "Hittable.h"
+#include "HittableList.h"
+#include "Sphere.h"
 #include <glm/glm.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/norm.hpp>
 
 
-double hitShpere(const glm::vec3& center, double radius, const Ray& r) {
-    glm::vec3 originToSphereCenter = center - r.ori;
-    auto a = glm::length2(r.dir);
-    auto h = glm::dot(r.dir, originToSphereCenter);
-    auto c = glm::length2(originToSphereCenter) - radius * radius;
-    auto discriminant = h * h -  a * c;
-    
-    if (discriminant < 0) {
-        return -1.0;
-    }
-    else {
-        return (h - std::sqrt(discriminant)) / a;
-    }
-
-}
-
-color rayColor(const Ray& r) {
-    auto t = hitShpere(glm::vec3(0, 0, -1), 0.5, r);
-    if (t > 0.0) {
-        glm::vec3 normal = glm::normalize(r.at(t) - glm::vec3(0, 0, -1));
-        return 0.5f * color(normal.x + 1, normal.y + 1, normal.z + 1);
+color rayColor(const Ray& r, const Hittable& world) {
+    hitRecord rec;
+    if (world.hit(r,0,infinity, rec)) {
+        return 0.5f * (rec.normal + color(1, 1, 1));
     }
 
     glm::vec3 normalizedDir = glm::normalize(r.dir);
@@ -48,6 +32,10 @@ int main() {
     else {
         imageHeight = imageHeight;
     }
+
+    HittableList world;
+    world.add(make_shared<Sphere>(glm::vec3(0, 0, -1), 0.5));
+    world.add(make_shared<Sphere>(glm::vec3(0, -100.5, -1), 100));
 
     // Camera
     auto focalLenght = 1.0;
@@ -78,7 +66,7 @@ int main() {
             auto rayDirection = pixelCenter - cameraCenter;
             Ray r(cameraCenter, rayDirection);
 
-            color pixelColor = rayColor(r);
+            color pixelColor = rayColor(r,world);
             writeColor(std::cout, pixelColor);
         }
     }
