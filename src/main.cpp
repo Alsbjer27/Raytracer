@@ -53,7 +53,7 @@ int main() {
 
     // Position of upper left pixel
     auto viewportUpperLeft = cameraCenter - glm::vec3(0, 0, focalLenght) - viewportU / 2.0f - viewportV / 2.0f;
-    auto topLeftPixelLoc = viewportUpperLeft + 5.0f * (pixelDeltaU + pixelDeltaV);
+    auto topLeftPixelLoc = viewportUpperLeft + 0.5f * (pixelDeltaU + pixelDeltaV);
 
     // Render
 

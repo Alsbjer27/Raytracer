@@ -15,7 +15,7 @@ bool Sphere::hit(const Ray& r, double rayTMin, double rayTMax, hitRecord& rec) c
     auto discriminant = h * h - a * c;
 
     if (discriminant < 0) {
-        return -1.0;
+        return false;
     }
     auto sqrtd = std::sqrt(discriminant);
 
