@@ -7,7 +7,7 @@ class Sphere : public Hittable
 public:
 	Sphere(const glm::vec3& center, double radius);
 
-	bool hit(const Ray& r, double rayTMin, double rayTMax, hitRecord& rec) const override;
+	bool hit(const Ray& r, Interval rayT, hitRecord& rec) const override;
 
 private:
 	glm::vec3 center;

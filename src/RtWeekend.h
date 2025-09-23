@@ -26,3 +26,5 @@ inline double degreesToRadians(double degrees) {
 #include "glm/glm.hpp"
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/norm.hpp>
+#include "Interval.h"
+

@@ -9,7 +9,7 @@
 
 color rayColor(const Ray& r, const Hittable& world) {
     hitRecord rec;
-    if (world.hit(r,0,infinity, rec)) {
+    if (world.hit(r, Interval(0, infinity), rec)) {
         return 0.5f * (rec.normal + color(1, 1, 1));
     }
 

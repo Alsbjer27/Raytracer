@@ -61,6 +61,8 @@ add_executable(raytracer
   src/HittableList.cpp
   src/HittableList.h
   src/RtWeekend.h
+  src/Interval.h
+  src/Interval.cpp
 )
 
 target_link_libraries(raytracer PRIVATE glm::glm)

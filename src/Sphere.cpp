@@ -6,7 +6,7 @@ Sphere::Sphere(const glm::vec3& center, double radius)
     : center(center), radius(std::fmax(0,radius)) {
 }
 
-bool Sphere::hit(const Ray& r, double rayTMin, double rayTMax, hitRecord& rec) const
+bool Sphere::hit(const Ray& r, Interval rayT, hitRecord& rec) const
 {
     glm::vec3 originToSphereCenter = center - r.ori;
     auto a = glm::length2(r.dir);
@@ -21,9 +21,9 @@ bool Sphere::hit(const Ray& r, double rayTMin, double rayTMax, hitRecord& rec) c
 
 
     auto root = (h - sqrtd) / a;
-    if (root <= rayTMin || rayTMax <= root) {
+    if (!rayT.surrounds(root)) {
         root = (h + sqrtd) / a;
-        if (root <= rayTMin || rayTMax <= root) {
+        if (!rayT.surrounds(root)) {
             return false;
         }  
     }

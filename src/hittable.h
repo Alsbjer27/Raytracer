@@ -17,6 +17,6 @@ public:
 	virtual ~Hittable() = default;
 
 	// Different geometry will implement its own def for a hit, therefore pure virtual function
-	virtual bool hit(const Ray& r, double rayTMin, double rayTMax, hitRecord& rec) const = 0;
+	virtual bool hit(const Ray& r, Interval rayT, hitRecord& rec) const = 0;
 
 };
