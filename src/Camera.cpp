@@ -58,8 +58,10 @@ void Camera::initialize() {
 
 color Camera::rayColor(const Ray& r, const Hittable& world) const {
     hitRecord rec;
+
     if (world.hit(r, Interval(0, infinity), rec)) {
-        return 0.5f * (rec.normal + color(1, 1, 1));
+        glm::vec3 direction = randomOnHemisphere(rec.normal);
+        return 0.5f * rayColor(Ray(rec.p, direction), world);
     }
 
     glm::vec3 normalizedDir = glm::normalize(r.dir);
@@ -77,7 +79,7 @@ Ray Camera::getRay(int i, int j) const
     auto rayOrigin = cameraCenter;
     auto rayDirection = pixelSample - rayOrigin;
 
-    return Ray();
+    return Ray(rayOrigin, rayDirection);
 }
 
 glm::vec3 Camera::sampleSquare() const

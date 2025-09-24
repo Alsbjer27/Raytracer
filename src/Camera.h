@@ -10,9 +10,9 @@
 class Camera {
 public:
     
-    double aspectRatio = 16.0 / 9.0;
-    int imageWidth = 400;
-    int samplesPerPixel = 10;
+    double aspectRatio = 1.0;
+    int imageWidth = 100;
+    int samplesPerPixel = 100;
     
     void render(const Hittable& world);
     

@@ -1,4 +1,7 @@
 #pragma once
+#include "glm/glm.hpp"
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/norm.hpp>
 #include <random>
 #include <cmath>
 #include <iostream>
@@ -31,11 +34,39 @@ inline double randomDouble(double min, double max) {
 	return min + (max - min) * randomDouble();
 }
 
+// Utility functions for GLM
+
+inline glm::vec3 randomVec3() {
+	return glm::vec3(randomDouble(), randomDouble(), randomDouble());
+}
+
+inline glm::vec3 randomVec3(double min, double max) {
+	return glm::vec3(randomDouble(min, max), randomDouble(min, max), randomDouble(min, max));
+}
+
+inline glm::vec3 randomUnitVector() {
+	while (true) {
+		auto p = randomVec3(-1, 1);
+		auto lenSqrt = glm::length2(p);
+		if (1e-160 < lenSqrt && lenSqrt <= 1) {
+			return p / sqrt(lenSqrt);
+		}
+	}
+}
+
+inline glm::vec3 randomOnHemisphere(const glm::vec3& normal) {
+	glm::vec3 onUnitSphere = randomUnitVector();
+	if (glm::dot(onUnitSphere, normal) > 0.0) {
+		return onUnitSphere;
+	}
+	else
+	{
+		return -onUnitSphere;
+	}
+}
+
 // Common headers
 #include "Color.h"
 #include "Ray.h"
-#include "glm/glm.hpp"
-#define GLM_ENABLE_EXPERIMENTAL
-#include <glm/gtx/norm.hpp>
 #include "Interval.h"
 
