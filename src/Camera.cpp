@@ -14,12 +14,12 @@ void Camera::render(const Hittable& world) {
     for (int j = 0; j < imageHeight; j++) {
         std::clog << "\rScanlines remaining" << (imageHeight - j) << " " << std::flush;
         for (int i = 0; i < imageWidth; i++) {
-            auto pixelCenter = topLeftPixelLoc + (pixelDeltaU * static_cast<float>(i)) + (static_cast<float>(j) * pixelDeltaV);
-            auto rayDirection = pixelCenter - cameraCenter;
-            Ray r(cameraCenter, rayDirection);
-
-            color pixelColor = rayColor(r,world);
-            writeColor(std::cout, pixelColor);
+            color pixelColor(0, 0, 0);
+            for (int sample = 0; sample < samplesPerPixel; sample++) {
+                Ray r = getRay(i, j);
+                pixelColor += rayColor(r, world);
+            }
+            writeColor(std::cout, pixelColor * static_cast<float>(pixelSamplesScale));
         }
     }
     std::clog << "\rDone.       \n";
@@ -31,6 +31,8 @@ void Camera::initialize() {
     
     imageHeight = int(imageWidth / aspectRatio);
     imageHeight = (imageHeight < 1) ? 1 : imageHeight;
+
+    pixelSamplesScale = 1.0 / samplesPerPixel;
 
     cameraCenter = glm::vec3(0, 0, 0);
  
@@ -63,4 +65,22 @@ color Camera::rayColor(const Ray& r, const Hittable& world) const {
     glm::vec3 normalizedDir = glm::normalize(r.dir);
     auto a = 0.5f * (normalizedDir.y + 1.0f);
     return (1.0f - a) * color(1.0f, 1.0f, 1.0f) + a * color(0.5f, 0.7f, 1.0f);
+}
+
+Ray Camera::getRay(int i, int j) const
+{
+    auto offset = sampleSquare();
+
+    auto pixelSample = topLeftPixelLoc
+        + pixelDeltaU * (i + offset.x)
+        + pixelDeltaV * (j + offset.y);
+    auto rayOrigin = cameraCenter;
+    auto rayDirection = pixelSample - rayOrigin;
+
+    return Ray();
+}
+
+glm::vec3 Camera::sampleSquare() const
+{
+    return glm::vec3(randomDouble() - 0.5, randomDouble() - 0.5, 0);
 }

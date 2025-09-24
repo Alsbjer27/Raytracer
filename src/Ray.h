@@ -13,7 +13,6 @@ public:
 
 	glm::vec3 at(float t) const;
 
-
 	glm::vec3 ori;
 	glm::vec3 dir;
 };

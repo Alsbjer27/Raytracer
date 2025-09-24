@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "Interval.h"
 #include "RtWeekend.h"
 
 using color = glm::vec3;
