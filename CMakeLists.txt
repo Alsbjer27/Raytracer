@@ -63,6 +63,8 @@ add_executable(raytracer
   src/RtWeekend.h
   src/Interval.h
   src/Interval.cpp
+  src/Camera.h
+  src/Camera.cpp
 )
 
 target_link_libraries(raytracer PRIVATE glm::glm)
