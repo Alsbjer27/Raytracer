@@ -21,13 +21,14 @@ bool Lambertian::scatter(const Ray& rIn, const hitRecord& rec, color& attenuatio
 	return true;
 }
 
-Metal::Metal(const color& albedo)
-: albedo(albedo) {}
+Metal::Metal(const color& albedo, float fuzz)
+: albedo(albedo), fuzz(fuzz < 1 ? fuzz: 1) {}
 
 bool Metal::scatter(const Ray& rIn, const hitRecord& rec, color& attenuation, Ray& scattered) const
 {
 	glm::vec3 reflected = reflect(rIn.direction(), rec.normal);
+	reflected = glm::length2(reflected) + (fuzz * randomUnitVector());
 	scattered = Ray(rec.p, reflected);
 	attenuation = albedo;
-	return true;
+	return (glm::dot(scattered.direction(), rec.normal));
 }
