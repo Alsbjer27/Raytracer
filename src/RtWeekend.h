@@ -65,6 +65,17 @@ inline glm::vec3 randomOnHemisphere(const glm::vec3& normal) {
 	}
 }
 
+inline bool nearZero(const glm::vec3 v) {
+	const auto s = 1e-8f;
+	return (std::fabs(v.x) < s) &&
+		(std::fabs(v.y) < s) &&
+		(std::fabs(v.z) < s);
+}
+
+inline glm::vec3 reflect(const glm::vec3& v, const glm::vec3& n) {
+	return v - 2 * glm::dot(v, n) * n;
+}
+
 // Common headers
 #include "Color.h"
 #include "Ray.h"

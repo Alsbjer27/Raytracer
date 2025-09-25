@@ -65,6 +65,8 @@ add_executable(raytracer
   src/Interval.cpp
   src/Camera.h
   src/Camera.cpp
+  src/Material.h
+  src/Material.cpp
 )
 
 target_link_libraries(raytracer PRIVATE glm::glm)

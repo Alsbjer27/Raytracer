@@ -2,10 +2,13 @@
 #include <glm/glm.hpp>
 #include "RtWeekend.h"
 
+class Material;
+
 class hitRecord {
 public:
 	glm::vec3 p;
 	glm::vec3 normal;
+	shared_ptr<Material> mat;
 	double t;
 	bool frontFace;
 

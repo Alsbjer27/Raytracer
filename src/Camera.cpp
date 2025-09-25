@@ -17,7 +17,7 @@ void Camera::render(const Hittable& world) {
             color pixelColor(0, 0, 0);
             for (int sample = 0; sample < samplesPerPixel; sample++) {
                 Ray r = getRay(i, j);
-                pixelColor += rayColor(r, world);
+                pixelColor += rayColor(r, maxDepth, world);
             }
             writeColor(std::cout, pixelColor * static_cast<float>(pixelSamplesScale));
         }
@@ -56,12 +56,26 @@ void Camera::initialize() {
 
 
 
-color Camera::rayColor(const Ray& r, const Hittable& world) const {
+color Camera::rayColor(const Ray& r, int depth, const Hittable& world) const {
+    if (depth <= 0) {
+        return color(0, 0, 0);
+    }
+    
     hitRecord rec;
 
-    if (world.hit(r, Interval(0, infinity), rec)) {
-        glm::vec3 direction = randomOnHemisphere(rec.normal);
-        return 0.5f * rayColor(Ray(rec.p, direction), world);
+    if (world.hit(r, Interval(0.001, infinity), rec)) {
+
+        Ray scattered;
+        color attenuation;
+        if (rec.mat->scatter(r, rec, attenuation, scattered)) {
+            return attenuation * rayColor(scattered, depth - 1, world);
+        }
+        else {
+            return color(0, 0, 0);
+        }
+        glm::vec3 direction = rec.normal + randomUnitVector();
+        // Float Changes Gamma
+        return 0.8f * rayColor(Ray(rec.p, direction), maxDepth-1, world);
     }
 
     glm::vec3 normalizedDir = glm::normalize(r.dir);

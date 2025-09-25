@@ -5,12 +5,13 @@
 class Sphere : public Hittable
 {
 public:
-	Sphere(const glm::vec3& center, double radius);
+	Sphere(const glm::vec3& center, double radius, shared_ptr<Material> mat);
 
 	bool hit(const Ray& r, Interval rayT, hitRecord& rec) const override;
 
 private:
 	glm::vec3 center;
 	double radius;
+	shared_ptr<Material> mat;
 };
 

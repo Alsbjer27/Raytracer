@@ -2,9 +2,9 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/norm.hpp>
 
-Sphere::Sphere(const glm::vec3& center, double radius)
-    : center(center), radius(std::fmax(0,radius)) {
-}
+Sphere::Sphere(const glm::vec3& center, double radius, shared_ptr<Material> mat)
+    : center(center), radius(std::fmax(0, radius)), mat(mat) {}
+
 
 bool Sphere::hit(const Ray& r, Interval rayT, hitRecord& rec) const
 {
@@ -31,5 +31,6 @@ bool Sphere::hit(const Ray& r, Interval rayT, hitRecord& rec) const
     rec.p = r.at(rec.t);
     glm::vec3 outwardNormal = (rec.p - center) / static_cast<float>(radius);
     rec.setFaceNormal(r, outwardNormal);
+    rec.mat = mat;
     return true;
 }
