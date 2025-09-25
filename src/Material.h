@@ -1,5 +1,7 @@
 #pragma once
 #include "Hittable.h"
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/norm.hpp>
 
 class Material
 {
@@ -29,3 +31,12 @@ private:
 	float fuzz;
 };
 
+class Dielectric : public Material {
+public:
+	Dielectric(float refractionIndex);
+
+	bool scatter(const Ray& rIn, const hitRecord& rec, color& attenuation, Ray& scattered) const override;
+
+private:
+	float refractionIndex;
+};
