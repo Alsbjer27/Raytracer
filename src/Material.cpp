@@ -47,7 +47,7 @@ bool Dielectric::scatter(const Ray& rIn, const hitRecord& rec, color& attenuatio
 	float ri = rec.frontFace ? (1.0f / refractionIndex) : refractionIndex;
 
 	glm::vec3 unitDirection = glm::normalize(rIn.direction());
-	glm::vec3 refracted = refract(unitDirection, rec.normal, ri);
+	glm::vec3 refracted = glm::refract(unitDirection, rec.normal, ri);
 
 	scattered = Ray(rec.p, refracted);
 

@@ -65,24 +65,11 @@ inline glm::vec3 randomOnHemisphere(const glm::vec3& normal) {
 	}
 }
 
-inline bool nearZero(const glm::vec3 v) {
+inline bool nearZero(const glm::vec3& v) {
 	const auto s = 1e-8f;
 	return (std::fabs(v.x) < s) &&
 		(std::fabs(v.y) < s) &&
 		(std::fabs(v.z) < s);
-}
-
-inline glm::vec3 reflect(const glm::vec3& v, const glm::vec3& n) {
-	return v - 2 * glm::dot(v, n) * n;
-}
-
-// Utility functions for GLM Refraction
-
-inline glm::vec3 refract(const glm::vec3& uv, const glm::vec3& n, float etaiOverEtat) {
-	auto cosTheta = std::fmin(glm::dot(-uv, n), 1.0f);
-	glm::vec3 refOutPerp = etaiOverEtat * (uv + cosTheta * n);
-	glm::vec3 refOutPara = -std::sqrt(std::fabs(1.0f - glm::length2(refOutPerp))) * n;
-	return refOutPerp + refOutPara;
 }
 
 // Common headers
