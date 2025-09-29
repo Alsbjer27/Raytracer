@@ -16,7 +16,7 @@ int main() {
 
     auto materialGround = make_shared<Lambertian>(color(0.8, 0.8, 0.0));
     auto materialCenter = make_shared<Lambertian>(color(0.1, 0.8, 0.5));
-    auto materialLeft = make_shared<Dielectric>(1.5f);
+    auto materialLeft = make_shared<Dielectric>(1.00 / 1.33);
     auto materialRight = make_shared<Metal>(color(0.8, 0.6, 1.0), 0.2);
 
 

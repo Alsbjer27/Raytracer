@@ -72,6 +72,8 @@ inline bool nearZero(const glm::vec3& v) {
 		(std::fabs(v.z) < s);
 }
 
+
+
 // Common headers
 #include "Color.h"
 #include "Ray.h"
