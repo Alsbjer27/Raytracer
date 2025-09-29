@@ -39,4 +39,5 @@ public:
 
 private:
 	float refractionIndex;
+    static double reflectance(double cosine, double refractionIndex);
 };

@@ -53,7 +53,7 @@ bool Dielectric::scatter(const Ray& rIn, const hitRecord& rec, color& attenuatio
     bool cannotRefract = ri * sinTheta > 1.0;
     glm::vec3 direction;
     
-    if (cannotRefract) {
+    if (cannotRefract || reflectance(cosTheta, ri) > randomDouble()) {
         direction = glm::reflect(unitDirection, rec.normal);
     } else {
         direction = glm::refract(unitDirection, rec.normal, ri);
@@ -61,4 +61,10 @@ bool Dielectric::scatter(const Ray& rIn, const hitRecord& rec, color& attenuatio
     
     scattered = Ray(rec.p, direction);
 	return true;
+}
+
+double Dielectric::reflectance(double cosine, double refractionIndex) {
+    auto r0 = (1 - refractionIndex) / (1 + refractionIndex);
+    r0 = r0*r0;
+    return r0 + (1-r0)*std::pow((1-cosine), 5);
 }
