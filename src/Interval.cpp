@@ -7,6 +7,12 @@ Interval::Interval() : min(+infinity), max(-infinity) {}
 
 Interval::Interval(double min, double max) : min(min), max(max) {}
 
+Interval::Interval(const Interval& a, const Interval& b)
+{
+    min = a.min <= b.min ? a.min : b.min;
+    max = a.max >= b.max ? a.max : b.max;
+}
+
 double Interval::size() const {
     return max - min;
 }
@@ -24,4 +30,10 @@ double Interval::clamp(double x) const
     if (x < min) return min;
     if (x > max) return max;
     return x;
+}
+
+Interval Interval::expand(double delta) const
+{
+    auto padding = delta / 2;
+    return Interval(min - padding, max + padding);
 }

@@ -1,5 +1,7 @@
 #pragma once
 #include "Hittable.h"
+#include "AABB.h"
+
 #include <memory>
 #include <vector>
 
@@ -16,5 +18,8 @@ public:
 
 	bool hit(const Ray& r, Interval rayT, hitRecord& rec) const override;
 
+	AABB boundingBox() const override { return bBox; }
+private:
+	AABB bBox;
 };
 

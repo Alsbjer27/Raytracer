@@ -3,7 +3,11 @@
 #include <glm/gtx/norm.hpp>
 
 Sphere::Sphere(const glm::vec3& center, double radius, shared_ptr<Material> mat)
-    : center(center), radius(std::fmax(0, radius)), mat(mat) {}
+    : center(center), radius(std::fmax(0, radius)), mat(mat) 
+{
+    auto rvec = glm::vec3(radius, radius, radius);
+    bBox = AABB(center - rvec, center + rvec);
+}
 
 
 bool Sphere::hit(const Ray& r, Interval rayT, hitRecord& rec) const
