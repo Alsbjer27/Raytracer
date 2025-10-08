@@ -72,6 +72,15 @@ inline bool nearZero(const glm::vec3& v) {
 		(std::fabs(v.z) < s);
 }
 
+inline glm::vec3 randomInUnitDisk() {
+	while (true) {
+		auto p = glm::vec3(randomDouble(-1, 1), randomDouble(-1, 1), 0);
+		if (glm::length2(p) < 1) {
+			return p;
+		}
+	}
+}
+
 
 
 // Common headers

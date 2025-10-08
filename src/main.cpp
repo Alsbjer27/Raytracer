@@ -14,6 +14,7 @@ int main() {
 
     HittableList world;
 
+
     auto materialGround = make_shared<Lambertian>(color(0.8, 0.8, 0.0));
     auto materialCenter = make_shared<Lambertian>(color(0.1, 0.8, 0.5));
     auto materialLeft = make_shared<Dielectric>(1.50);
@@ -33,6 +34,14 @@ int main() {
     cam.imageWidth = 400;
     cam.samplesPerPixel = 100;
     cam.maxDepth = 50;
+
+    cam.vfov = 20;
+    cam.lookFrom = glm::vec3(-2, 2, 1);
+    cam.lookAt = glm::vec3(0, 0, -1);
+    cam.vup = glm::vec3(0, 1, 0);
+
+    cam.defocusAngle = 10.0;
+    cam.focusDistance = 3.4;
 
     cam.render(world);
 }

@@ -34,24 +34,33 @@ void Camera::initialize() {
 
     pixelSamplesScale = 1.0 / samplesPerPixel;
 
-    cameraCenter = glm::vec3(0, 0, 0);
+    cameraCenter = lookFrom;
  
     // Viewport dimensions
-    auto focalLength = 1.0;
-    auto viewportHeight = 2.0;
+    auto theta = degreesToRadians(vfov);
+    auto h = std::tan(theta / 2);
+    auto viewportHeight = 2.0 * h * focusDistance;
     auto viewportWidth = viewportHeight * (double(imageWidth) / imageHeight);
 
+    w = glm::normalize(lookFrom - lookAt);
+    u = glm::normalize(glm::cross(vup, w));
+    v = glm::cross(w, u);
+
     // Horizontal and vertical vectors along viewport edges
-    auto viewportU = glm::vec3(viewportWidth, 0, 0);
-    auto viewportV = glm::vec3(0, -viewportHeight, 0);
+    glm::vec3 viewportU = u * static_cast<float>(viewportWidth);
+    glm::vec3 viewportV = -v * static_cast<float>(viewportHeight);
 
     // Horizontal and vertical deltas
     pixelDeltaU = viewportU / static_cast<float>(imageWidth);
     pixelDeltaV = viewportV / static_cast<float>(imageHeight);
 
     // Position of upper left pixel
-    auto viewportUpperLeft = cameraCenter - glm::vec3(0, 0, focalLength) - viewportU / 2.0f - viewportV / 2.0f;
+    auto viewportUpperLeft = cameraCenter - (focusDistance * w) - viewportU / 2.0f - viewportV / 2.0f;
     topLeftPixelLoc = viewportUpperLeft + 0.5f * (pixelDeltaU + pixelDeltaV);
+
+    auto defocusRadius = focusDistance * std::tan(degreesToRadians(defocusAngle / 2));
+    defocusDiskU = u * static_cast<float>(defocusRadius);
+    defocusDiskV = v * static_cast<float>(defocusRadius);
 }
 
 
@@ -83,6 +92,12 @@ color Camera::rayColor(const Ray& r, int depth, const Hittable& world) const {
     return (1.0f - a) * color(1.0f, 1.0f, 1.0f) + a * color(0.5f, 0.7f, 1.0f);
 }
 
+glm::vec3 Camera::defocusDiskSample() const
+{
+    auto p = randomInUnitDisk();
+    return cameraCenter + (p[0] * defocusDiskU) + (p[1] * defocusDiskV);
+}
+
 Ray Camera::getRay(int i, int j) const
 {
     auto offset = sampleSquare();
@@ -90,7 +105,8 @@ Ray Camera::getRay(int i, int j) const
     auto pixelSample = topLeftPixelLoc
         + pixelDeltaU * (i + offset.x)
         + pixelDeltaV * (j + offset.y);
-    auto rayOrigin = cameraCenter;
+
+    auto rayOrigin = (defocusAngle <= 0) ? cameraCenter : defocusDiskSample();
     auto rayDirection = pixelSample - rayOrigin;
 
     return Ray(rayOrigin, rayDirection);
