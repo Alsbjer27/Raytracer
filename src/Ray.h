@@ -6,14 +6,19 @@ class Ray
 public:
 	Ray();
 
+	Ray(const glm::vec3& origin, const glm::vec3& direction, double time);
+
 	Ray(const glm::vec3& origin, const glm::vec3& direction);
 
 	const glm::vec3& origin() const;
 	const glm::vec3& direction() const;
 
+	double time() const;
+
 	glm::vec3 at(float t) const;
 
 	glm::vec3 ori;
 	glm::vec3 dir;
+	double tm;
 };
 

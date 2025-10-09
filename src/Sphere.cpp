@@ -2,16 +2,20 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/norm.hpp>
 
-Sphere::Sphere(const glm::vec3& center, double radius, shared_ptr<Material> mat)
-    : center(center), radius(std::fmax(0, radius)), mat(mat) {}
+Sphere::Sphere(const glm::vec3& staticCenter, double radius, shared_ptr<Material> mat)
+    : center(staticCenter, glm::vec3(0,0,0)), radius(std::fmax(0, radius)), mat(mat) {}
+
+Sphere::Sphere(const glm::vec3& center1, const glm::vec3& center2, double radius, shared_ptr<Material> mat)
+: center(center1, center2 - center1), radius(std::fmax(0, radius)), mat(mat) {}
 
 
 bool Sphere::hit(const Ray& r, Interval rayT, hitRecord& rec) const
 {
-    glm::vec3 originToSphereCenter = center - r.ori;
+    glm::vec3 currentCenter = center.at(r.time());
+    glm::vec3 oc = currentCenter - r.origin();
     auto a = glm::length2(r.dir);
-    auto h = glm::dot(r.dir, originToSphereCenter);
-    auto c = glm::length2(originToSphereCenter) - radius * radius;
+    auto h = glm::dot(r.dir, oc);
+    auto c = glm::length2(oc) - radius * radius;
     auto discriminant = h * h - a * c;
 
     if (discriminant < 0) {
@@ -29,7 +33,7 @@ bool Sphere::hit(const Ray& r, Interval rayT, hitRecord& rec) const
     }
     rec.t = root;
     rec.p = r.at(rec.t);
-    glm::vec3 outwardNormal = (rec.p - center) / static_cast<float>(radius);
+    glm::vec3 outwardNormal = (rec.p - currentCenter) / static_cast<float>(radius);
     rec.setFaceNormal(r, outwardNormal);
     rec.mat = mat;
     return true;
