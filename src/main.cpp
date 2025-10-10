@@ -17,8 +17,8 @@ int main() {
     auto materialGround = make_shared<Lambertian>(color(0.5, 0.5, 0.5));
     world.add(make_shared<Sphere>(glm::vec3(0, -1000, 0), 1000, materialGround));
 
-    for (int a = -11; a < 11; a++) {
-        for (int b = -11; b < 11; b++) {
+    for (int a = -1; a < 11; a++) {
+        for (int b = -1; b < 11; b++) {
             auto chooseMat = randomDouble();
             glm::vec3 center(a + 0.9 * randomDouble(), 0.2, b + 0.9 * randomDouble());
 
@@ -28,7 +28,8 @@ int main() {
                 if (chooseMat < 0.8) {
                     auto albedo = randomVec3() * randomVec3();
                     sphereMaterial = make_shared<Lambertian>(albedo);
-                    world.add(make_shared<Sphere>(center, 0.2, sphereMaterial));
+                    auto center2 = center + glm::vec3(0, randomDouble(0, 0.5), 0);
+                    world.add(make_shared<Sphere>(center, center2,0.2, sphereMaterial));
                 }
                 else if(chooseMat < 0.95){
                     auto albedo = randomVec3(0.5, 1);
@@ -59,9 +60,9 @@ int main() {
     Camera cam;
     
     cam.aspectRatio = 16.0 / 9.0;
-    cam.imageWidth = 1200;
-    cam.samplesPerPixel = 100;
-    cam.maxDepth = 50;
+    cam.imageWidth = 400;
+    cam.samplesPerPixel = 50;
+    cam.maxDepth = 10;
 
     cam.vfov = 20;
     cam.lookFrom = glm::vec3(13, 2, 3);
