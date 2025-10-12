@@ -1,6 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include "RtWeekend.h"
+#include "AABB.h"
 
 class Material;
 
@@ -21,5 +22,6 @@ public:
 
 	// Different geometry will implement its own def for a hit, therefore pure virtual function
 	virtual bool hit(const Ray& r, Interval rayT, hitRecord& rec) const = 0;
-
+	
+	virtual AABB boundingBox() const = 0;
 };

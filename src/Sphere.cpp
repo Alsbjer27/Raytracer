@@ -3,10 +3,20 @@
 #include <glm/gtx/norm.hpp>
 
 Sphere::Sphere(const glm::vec3& staticCenter, double radius, shared_ptr<Material> mat)
-    : center(staticCenter, glm::vec3(0,0,0)), radius(std::fmax(0, radius)), mat(mat) {}
+    : center(staticCenter, glm::vec3(0,0,0)), radius(std::fmax(0, radius)), mat(mat) 
+{
+    auto rvec = glm::vec3(radius, radius, radius);
+    bBox = AABB(staticCenter - rvec, staticCenter + rvec);
+}
 
 Sphere::Sphere(const glm::vec3& center1, const glm::vec3& center2, double radius, shared_ptr<Material> mat)
-: center(center1, center2 - center1), radius(std::fmax(0, radius)), mat(mat) {}
+: center(center1, center2 - center1), radius(std::fmax(0, radius)), mat(mat) 
+{
+    auto rvec = glm::vec3(radius, radius, radius);
+    AABB box1(center.at(0) - rvec, center.at(0) + rvec);
+    AABB box2(center.at(1) - rvec, center.at(1) + rvec);
+    bBox = AABB(box1, box2);
+}
 
 
 bool Sphere::hit(const Ray& r, Interval rayT, hitRecord& rec) const
@@ -37,4 +47,9 @@ bool Sphere::hit(const Ray& r, Interval rayT, hitRecord& rec) const
     rec.setFaceNormal(r, outwardNormal);
     rec.mat = mat;
     return true;
+}
+
+AABB Sphere::boundingBox() const
+{
+    return bBox;
 }

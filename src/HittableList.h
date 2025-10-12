@@ -1,4 +1,5 @@
 #pragma once
+#include "AABB.h"
 #include "Hittable.h"
 #include <memory>
 #include <vector>
@@ -15,6 +16,11 @@ public:
 	void add(shared_ptr<Hittable> object);
 
 	bool hit(const Ray& r, Interval rayT, hitRecord& rec) const override;
+
+	AABB boundingBox() const override;
+
+private:
+	AABB bBox;
 
 };
 
