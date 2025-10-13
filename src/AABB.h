@@ -9,14 +9,14 @@ public:
 	AABB();
 
 	AABB(const Interval& x, const Interval& y, const Interval& z);
-
 	AABB(const glm::vec3& a, const glm::vec3& b);
-
 	AABB(const AABB& box0, const AABB& box1);
 
 	const Interval& axisInterval(int n) const;
+	bool hit(const Ray& r, Interval& rayT) const; //the & is from cursor, helps with performance
+	int longestAxis() const;
 
-	bool hit(const Ray& r, Interval rayT) const;
-
+	static const AABB empty;    // Add these two lines
+	static const AABB universe;
 };
 

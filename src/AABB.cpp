@@ -26,7 +26,7 @@ const Interval& AABB::axisInterval(int n) const
 	return x;
 }
 
-bool AABB::hit(const Ray& r, Interval rayT) const
+bool AABB::hit(const Ray& r, Interval& rayT) const //the & is from cursor, helps with performance
 {
 	const glm::vec3& rayOrigin = r.origin();
 	const glm::vec3& rayDirection = r.direction();
@@ -60,3 +60,15 @@ bool AABB::hit(const Ray& r, Interval rayT) const
 	}
 	return true;
 }
+
+int AABB::longestAxis() const
+{
+	// Returns the index of the longest axis of the bounding box.
+	if (x.size() > y.size())
+		return x.size() > z.size() ? 0 : 2;
+	else
+		return y.size() > z.size() ? 1 : 2;
+}
+
+const AABB AABB::empty = AABB(Interval::empty, Interval::empty, Interval::empty);
+const AABB AABB::universe = AABB(Interval::universe, Interval::universe, Interval::universe);

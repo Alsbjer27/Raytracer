@@ -1,4 +1,5 @@
 #include "RtWeekend.h"
+#include "BVH.h"
 #include "Camera.h"
 #include "Hittable.h"
 #include "HittableList.h"
@@ -56,6 +57,8 @@ int main() {
     world.add(make_shared<Sphere>(glm::vec3(0, 1, 0), 1.0, material1));
     world.add(make_shared<Sphere>(glm::vec3(-4, 1, 0), 1.0, material2));
     world.add(make_shared<Sphere>(glm::vec3(4, 1, 0), 1.0, material3));
+
+    world = HittableList(make_shared<BVHNode>(world));
 
     Camera cam;
     

@@ -18,5 +18,13 @@ private:
 	shared_ptr<Hittable> right;
 	AABB bBox;
 
+	static bool boxCompare(
+		const shared_ptr<Hittable> a, const shared_ptr<Hittable> b, int axisIndex
+	);
+
+	static bool boxXCompare(const shared_ptr<Hittable> a, const shared_ptr<Hittable> b);
+	static bool boxYCompare(const shared_ptr<Hittable> a, const shared_ptr<Hittable> b);
+	static bool boxZCompare(const shared_ptr<Hittable> a, const shared_ptr<Hittable> b);
+
 };
 
