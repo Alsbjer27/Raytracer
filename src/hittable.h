@@ -13,6 +13,9 @@ public:
 	double t;
 	bool frontFace;
 
+	double u;
+	double v;
+
 	void setFaceNormal(const Ray& r, const glm::vec3& outwardNormal);
 };
 

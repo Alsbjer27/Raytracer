@@ -71,6 +71,8 @@ add_executable(raytracer
   src/AABB.cpp
   src/BVH.h
   src/BVH.cpp
+  src/Quad.h
+  src/Quad.cpp
 )
 
 target_link_libraries(raytracer PRIVATE glm::glm)

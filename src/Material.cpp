@@ -10,6 +10,11 @@ bool Material::scatter(const Ray& rIn, const hitRecord& rec, color& attenuation,
 	return false;
 }
 
+color Material::emitted(double u, double v, const glm::vec3& p) const
+{
+	return color(0,0,0);
+}
+
 Lambertian::Lambertian(const color& albedo)
  : albedo(albedo) {}
 
@@ -67,4 +72,12 @@ double Dielectric::reflectance(double cosine, double refractionIndex) {
     auto r0 = (1 - refractionIndex) / (1 + refractionIndex);
     r0 = r0*r0;
     return r0 + (1-r0)*std::pow((1-cosine), 5);
+}
+
+DiffuseLight::DiffuseLight(const color& emit)
+: emitColor(emit) {}
+
+color DiffuseLight::emitted(double u, double v, const glm::vec3& p) const
+{
+	return emitColor;
 }

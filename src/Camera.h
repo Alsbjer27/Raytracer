@@ -15,6 +15,7 @@ public:
     int imageWidth = 100;
     int samplesPerPixel = 10;
     int maxDepth = 10;
+    color background;
 
     double vfov = 90;
     glm::vec3 lookFrom = glm::vec3(0, 0, 0);

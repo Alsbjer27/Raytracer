@@ -66,31 +66,34 @@ void Camera::initialize() {
 
 
 color Camera::rayColor(const Ray& r, int depth, const Hittable& world) const {
-    if (depth <= 0) {
+    if (depth <= 0)
         return color(0, 0, 0);
-    }
-    
+
     hitRecord rec;
 
-    if (world.hit(r, Interval(0.001, infinity), rec)) {
-
-        Ray scattered;
-        color attenuation;
-        if (rec.mat->scatter(r, rec, attenuation, scattered)) {
-            return attenuation * rayColor(scattered, depth - 1, world);
-        }
-        else {
-            return color(0, 0, 0);
-        }
-        glm::vec3 direction = rec.normal + randomUnitVector();
-        // Float Changes Gamma
-        return 0.8f * rayColor(Ray(rec.p, direction), maxDepth-1, world);
+    // ---------- Intersection ----------
+    if (!world.hit(r, Interval(0.001, infinity), rec)) {
+        // If nothing was hitjust return background
+        glm::vec3 unitDir = glm::normalize(r.direction());
+        auto a = 0.5f * (unitDir.y + 1.0f);
+        return (1.0f - a) * color(1.0f, 1.0f, 1.0f) +
+            a * color(0.5f, 0.7f, 1.0f);
     }
 
-    glm::vec3 normalizedDir = glm::normalize(r.dir);
-    auto a = 0.5f * (normalizedDir.y + 1.0f);
-    return (1.0f - a) * color(1.0f, 1.0f, 1.0f) + a * color(0.5f, 0.7f, 1.0f);
+    // ---------- Emission + Scattering ----------
+    color emitted = rec.mat
+        ? rec.mat->emitted(rec.u, rec.v, rec.p)
+        : color(0, 0, 0);
+
+    Ray scattered;
+    color attenuation;
+
+    if (!rec.mat || !rec.mat->scatter(r, rec, attenuation, scattered))
+        return emitted; // hit light source or non-scattering surface
+
+    return emitted + attenuation * rayColor(scattered, depth - 1, world);
 }
+
 
 glm::vec3 Camera::defocusDiskSample() const
 {

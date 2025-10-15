@@ -70,5 +70,14 @@ int AABB::longestAxis() const
 		return y.size() > z.size() ? 1 : 2;
 }
 
+void AABB::padToMinimums()
+{
+	double delta = 0.0001;
+	if (x.size() < delta) x = x.expand(delta);
+	if (y.size() < delta) y = y.expand(delta);
+	if (z.size() < delta) z = z.expand(delta);
+
+}
+
 const AABB AABB::empty = AABB(Interval::empty, Interval::empty, Interval::empty);
 const AABB AABB::universe = AABB(Interval::universe, Interval::universe, Interval::universe);

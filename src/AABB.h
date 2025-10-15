@@ -18,5 +18,7 @@ public:
 
 	static const AABB empty;    // Add these two lines
 	static const AABB universe;
+private:
+	void padToMinimums();
 };
 
