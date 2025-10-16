@@ -20,6 +20,7 @@ int main() {
     auto white = make_shared<Lambertian>(color(.73, .73, .73));
     auto green = make_shared<Lambertian>(color(.12, .45, .15));
     auto light = make_shared<DiffuseLight>(color(15, 15, 15));
+    auto metal = make_shared<Metal>(color(1.0, 1.0, 1.0), 0.0);
 
     // Quads
     world.add(make_shared<Quad>(glm::vec3(555, 0, 0), glm::vec3(0, 555, 0), glm::vec3(0, 0, 555), green));
@@ -27,18 +28,26 @@ int main() {
     world.add(make_shared<Quad>(glm::vec3(343, 554, 332), glm::vec3(-130, 0, 0), glm::vec3(0, 0, -105), light));
     world.add(make_shared<Quad>(glm::vec3(0, 0, 0), glm::vec3(555, 0, 0), glm::vec3(0, 0, 555), white));
     world.add(make_shared<Quad>(glm::vec3(555, 555, 555), glm::vec3(-555, 0, 0), glm::vec3(0, 0, -555), white));
-    world.add(make_shared<Quad>(glm::vec3(0, 0, 555), glm::vec3(555, 0, 0), glm::vec3(0, 555, 0), white));
+    world.add(make_shared<Quad>(glm::vec3(0, 0, 555), glm::vec3(555, 0, 0), glm::vec3(0, 555, 0), metal));
 
     // Boxes
-    world.add(Quad::box(glm::vec3(130, 0, 65), glm::vec3(295, 165, 230), white));
-    world.add(Quad::box(glm::vec3(265, 0, 295), glm::vec3(430, 330, 460), white));
+    shared_ptr<Hittable> box1 = Quad::box(glm::vec3(0, 0, 0), glm::vec3(165, 330, 165), white);
+    box1 = make_shared<RotateY>(box1, 15);
+    box1 = make_shared<Translate>(box1, glm::vec3(265, 0, 295));
+    world.add(box1);
+
+    shared_ptr<Hittable> box2 = Quad::box(glm::vec3(0, 0, 0), glm::vec3(165, 165, 165), white);
+    box2 = make_shared<RotateY>(box2, -18);
+    box2 = make_shared<Translate>(box2, glm::vec3(130, 0, 65));
+    world.add(box2);
+
 
     Camera cam;
 
     cam.aspectRatio = 1.0;
     cam.imageWidth = 400;
-    cam.samplesPerPixel = 100;
-    cam.maxDepth = 50;
+    cam.samplesPerPixel = 300;
+    cam.maxDepth = 60;
     cam.background = color(0, 0, 0);
 
     cam.vfov = 40;

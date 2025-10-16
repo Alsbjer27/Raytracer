@@ -43,4 +43,19 @@ private:
 	AABB bBox;
 };
 
+class RotateY : public Hittable {
+public:
+	RotateY(shared_ptr<Hittable> object, double angle);
+
+	bool hit(const Ray& r, Interval rayT, hitRecord& rec) const override;
+
+	AABB boundingBox() const override;
+
+private:
+	shared_ptr<Hittable> object;
+	double sinTheta;
+	double cosTheta;
+	AABB bBox;
+};
+
 

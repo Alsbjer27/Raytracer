@@ -19,6 +19,7 @@ public:
 
     friend Interval operator+(const Interval& iVal, double displacement);
     friend Interval operator+(double displacement, const Interval& iVal);
+
     static const Interval empty;
     static const Interval universe;
     
