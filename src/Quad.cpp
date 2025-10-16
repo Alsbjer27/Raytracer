@@ -69,3 +69,24 @@ bool Quad::isInterior(double a, double b, hitRecord& rec) const
 
 	return true;
 }
+
+shared_ptr<HittableList> Quad::box(const glm::vec3& a, const glm::vec3& b, shared_ptr<Material> mat)
+{
+	auto sides = make_shared<HittableList>();
+
+	auto min = glm::vec3(std::fmin(a.x, b.x), std::fmin(a.y, b.y), std::fmin(a.z, b.z));
+	auto max = glm::vec3(std::fmax(a.x, b.x), std::fmax(a.y, b.y), std::fmax(a.z, b.z));
+
+	auto dx = glm::vec3(max.x - min.x, 0, 0);
+	auto dy = glm::vec3(0, max.y - min.y, 0);
+	auto dz = glm::vec3(0, 0, max.z - min.z);
+
+	sides->add(make_shared<Quad>(glm::vec3(min.x, min.y, max.z), dx, dy, mat)); // front
+	sides->add(make_shared<Quad>(glm::vec3(max.x, min.y, max.z), -dz, dy, mat)); // right
+	sides->add(make_shared<Quad>(glm::vec3(max.x, min.y, min.z), -dx, dy, mat)); // back
+	sides->add(make_shared<Quad>(glm::vec3(min.x, min.y, min.z), dz, dy, mat)); // left
+	sides->add(make_shared<Quad>(glm::vec3(min.x, max.y, max.z), dx, -dz, mat)); // top
+	sides->add(make_shared<Quad>(glm::vec3(min.x, min.y, min.z), dx, dz, mat)); // bottom
+
+	return sides;
+}

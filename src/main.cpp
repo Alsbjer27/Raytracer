@@ -29,12 +29,15 @@ int main() {
     world.add(make_shared<Quad>(glm::vec3(555, 555, 555), glm::vec3(-555, 0, 0), glm::vec3(0, 0, -555), white));
     world.add(make_shared<Quad>(glm::vec3(0, 0, 555), glm::vec3(555, 0, 0), glm::vec3(0, 555, 0), white));
 
+    // Boxes
+    world.add(Quad::box(glm::vec3(130, 0, 65), glm::vec3(295, 165, 230), white));
+    world.add(Quad::box(glm::vec3(265, 0, 295), glm::vec3(430, 330, 460), white));
 
     Camera cam;
 
     cam.aspectRatio = 1.0;
-    cam.imageWidth = 600;
-    cam.samplesPerPixel = 200;
+    cam.imageWidth = 400;
+    cam.samplesPerPixel = 100;
     cam.maxDepth = 50;
     cam.background = color(0, 0, 0);
 

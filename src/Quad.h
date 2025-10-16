@@ -1,5 +1,6 @@
 #pragma once
 #include "hittable.h"
+#include "HittableList.h"
 
 class Quad : public Hittable
 {
@@ -13,6 +14,8 @@ public:
 	bool hit(const Ray& r, Interval rayT, hitRecord& rec) const override;
 
 	virtual bool isInterior(double a, double b, hitRecord& rec) const;
+
+	static shared_ptr<HittableList> box(const glm::vec3& a, const glm::vec3& b, shared_ptr<Material> mat);
 
 private:
 	glm::vec3 Q;

@@ -18,6 +18,10 @@ public:
 
 	static const AABB empty;    // Add these two lines
 	static const AABB universe;
+
+	friend AABB operator+(const AABB& bBox, const glm::vec3& offset);
+	friend AABB operator+(const glm::vec3& offset, const AABB& bBox);
+
 private:
 	void padToMinimums();
 };

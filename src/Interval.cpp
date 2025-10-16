@@ -37,3 +37,13 @@ Interval Interval::expand(double delta) const
     auto padding = delta / 2;
     return Interval(min - padding, max + padding);
 }
+
+Interval operator+(const Interval& iVal, double displacement)
+{
+    return Interval(iVal.min + displacement, iVal.max + displacement);
+}
+
+Interval operator+(double displacement, const Interval& iVal)
+{
+    return iVal + displacement;
+}

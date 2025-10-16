@@ -81,3 +81,13 @@ void AABB::padToMinimums()
 
 const AABB AABB::empty = AABB(Interval::empty, Interval::empty, Interval::empty);
 const AABB AABB::universe = AABB(Interval::universe, Interval::universe, Interval::universe);
+
+AABB operator+(const AABB& bBox, const glm::vec3& offset)
+{
+	return AABB(bBox.x + offset.x, bBox.y + offset.y, bBox.z + offset.z);
+}
+
+AABB operator+(const glm::vec3& offset, const AABB& bBox)
+{
+	return bBox + offset;
+}

@@ -28,3 +28,19 @@ public:
 	
 	virtual AABB boundingBox() const = 0;
 };
+
+class Translate : public Hittable {
+public:
+	Translate(shared_ptr<Hittable> object, const glm::vec3& offset);
+
+	bool hit(const Ray& r, Interval rayT, hitRecord& rec) const override;
+
+	AABB boundingBox() const override;
+
+private:
+	shared_ptr<Hittable> object;
+	glm::vec3 offset;
+	AABB bBox;
+};
+
+
