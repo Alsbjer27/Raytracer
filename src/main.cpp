@@ -6,6 +6,7 @@
 #include "Material.h"
 #include "Quad.h"
 #include "Sphere.h"
+#include "Triangle.h"
 #include <glm/glm.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/norm.hpp>
@@ -21,6 +22,7 @@ int main() {
     auto green = make_shared<Lambertian>(color(.12, .45, .15));
     auto light = make_shared<DiffuseLight>(color(15, 15, 15));
     auto metal = make_shared<Metal>(color(1.0, 1.0, 1.0), 0.0);
+    auto blue = make_shared<Lambertian>(color(0.1, 0.2, 0.7));
 
     // Quads
     world.add(make_shared<Quad>(glm::vec3(555, 0, 0), glm::vec3(0, 555, 0), glm::vec3(0, 0, 555), green));
@@ -40,6 +42,14 @@ int main() {
     box2 = make_shared<RotateY>(box2, -18);
     box2 = make_shared<Translate>(box2, glm::vec3(130, 0, 65));
     world.add(box2);
+
+    shared_ptr<Hittable> tetrahedron = Triangle::tetrahedron(
+        glm::vec3(150, 0, 150),
+        glm::vec3(210, 0, 140),
+        glm::vec3(170, 0, 210),
+        glm::vec3(190, 80, 180),
+        blue);
+    world.add(make_shared<Translate>(tetrahedron, glm::vec3(97.5, 257.5, 107.5)));
 
 
     Camera cam;

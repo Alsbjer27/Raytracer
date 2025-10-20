@@ -73,6 +73,8 @@ add_executable(raytracer
   src/BVH.cpp
   src/Quad.h
   src/Quad.cpp
+  src/Triangle.h
+  src/Triangle.cpp
 )
 
 target_link_libraries(raytracer PRIVATE glm::glm)
