@@ -25,43 +25,46 @@ int main() {
     auto blue = make_shared<Lambertian>(color(0.1, 0.2, 0.7));
 
     // Quads
-    world.add(make_shared<Quad>(glm::vec3(555, 0, 0), glm::vec3(0, 555, 0), glm::vec3(0, 0, 555), green));
-    world.add(make_shared<Quad>(glm::vec3(0, 0, 0), glm::vec3(0, 555, 0), glm::vec3(0, 0, 555), red));
-    world.add(make_shared<Quad>(glm::vec3(343, 554, 332), glm::vec3(-130, 0, 0), glm::vec3(0, 0, -105), light));
-    world.add(make_shared<Quad>(glm::vec3(0, 0, 0), glm::vec3(555, 0, 0), glm::vec3(0, 0, 555), white));
-    world.add(make_shared<Quad>(glm::vec3(555, 555, 555), glm::vec3(-555, 0, 0), glm::vec3(0, 0, -555), white));
-    world.add(make_shared<Quad>(glm::vec3(0, 0, 555), glm::vec3(555, 0, 0), glm::vec3(0, 555, 0), metal));
+    world.add(make_shared<Quad>(glm::vec3(555, 0, 0), glm::vec3(0, 555, 0), glm::vec3(0, 0, 555), green)); // Left Wall
+    world.add(make_shared<Quad>(glm::vec3(0, 0, 0), glm::vec3(0, 555, 0), glm::vec3(0, 0, 555), red)); // Right Wall
+    world.add(make_shared<Quad>(glm::vec3(343, 554, 332), glm::vec3(-130, 0, 0), glm::vec3(0, 0, -105), light)); //Light
+    world.add(make_shared<Quad>(glm::vec3(0, 0, 0), glm::vec3(555, 0, 0), glm::vec3(0, 0, 555), white)); // Floor
+    world.add(make_shared<Quad>(glm::vec3(555, 555, 555), glm::vec3(-555, 0, 0), glm::vec3(0, 0, -555), white)); // Ceiling
+    world.add(make_shared<Quad>(glm::vec3(0, 0, 555), glm::vec3(555, 0, 0), glm::vec3(0, 555, 0), metal)); // Back Wall
 
     // Boxes
+    // Switch for sphere
     shared_ptr<Hittable> box1 = Quad::box(glm::vec3(0, 0, 0), glm::vec3(165, 330, 165), white);
     box1 = make_shared<RotateY>(box1, 15);
     box1 = make_shared<Translate>(box1, glm::vec3(265, 0, 295));
     world.add(box1);
 
+    // Keep but lift higher
     shared_ptr<Hittable> box2 = Quad::box(glm::vec3(0, 0, 0), glm::vec3(165, 165, 165), white);
     box2 = make_shared<RotateY>(box2, -18);
     box2 = make_shared<Translate>(box2, glm::vec3(130, 0, 65));
     world.add(box2);
 
     shared_ptr<Hittable> tetrahedron = Triangle::tetrahedron(
-        glm::vec3(150, 0, 150),
-        glm::vec3(210, 0, 140),
-        glm::vec3(170, 0, 210),
-        glm::vec3(190, 80, 180),
-        blue);
-    world.add(make_shared<Translate>(tetrahedron, glm::vec3(97.5, 257.5, 107.5)));
+        glm::vec3(100, 0, 100),
+        glm::vec3(250, 0, 90),
+        glm::vec3(170, 0, 250),
+        glm::vec3(190, 120, 180),
+        red);
+    tetrahedron = make_shared<RotateY>(tetrahedron, 25);
+    world.add(make_shared<Translate>(tetrahedron, glm::vec3(20, 100, 10)));
 
 
     Camera cam;
 
     cam.aspectRatio = 1.0;
     cam.imageWidth = 400;
-    cam.samplesPerPixel = 300;
-    cam.maxDepth = 60;
+    cam.samplesPerPixel = 20;
+    cam.maxDepth = 10;
     cam.background = color(0, 0, 0);
 
     cam.vfov = 40;
-    cam.lookFrom = glm::vec3(278, 278, -800);
+    cam.lookFrom = glm::vec3(278, 278, -650);
     cam.lookAt = glm::vec3(278, 278, 0);
     cam.vup = glm::vec3(0, 1, 0);
 

@@ -12,7 +12,7 @@ void Camera::render(const Hittable& world) {
     std::cout << "P3\n" << imageWidth << ' ' << imageHeight << "\n255\n";
 
     for (int j = 0; j < imageHeight; j++) {
-        std::clog << "\rScanlines remaining" << (imageHeight - j) << " " << std::flush;
+        std::clog << "\rScanlines remaining " << (imageHeight - j) << " " << std::flush;
         for (int i = 0; i < imageWidth; i++) {
             color pixelColor(0, 0, 0);
             for (int sample = 0; sample < samplesPerPixel; sample++) {
@@ -73,11 +73,8 @@ color Camera::rayColor(const Ray& r, int depth, const Hittable& world) const {
 
     // ---------- Intersection ----------
     if (!world.hit(r, Interval(0.001, infinity), rec)) {
-        // If nothing was hitjust return background
-        glm::vec3 unitDir = glm::normalize(r.direction());
-        auto a = 0.5f * (unitDir.y + 1.0f);
-        return (1.0f - a) * color(1.0f, 1.0f, 1.0f) +
-            a * color(0.5f, 0.7f, 1.0f);
+        // If nothing was hit just return background
+        return background;
     }
 
     // ---------- Emission + Scattering ----------
