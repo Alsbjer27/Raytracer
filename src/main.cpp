@@ -23,17 +23,20 @@ int main() {
     auto light = make_shared<DiffuseLight>(color(15, 15, 15));
     auto metal = make_shared<Metal>(color(1.0, 1.0, 1.0), 0.0);
     auto blue = make_shared<Lambertian>(color(0.1, 0.2, 0.7));
+    auto trans = make_shared<Dielectric>(1.3);
 
     // Quads
     world.add(make_shared<Quad>(glm::vec3(555, 0, 0), glm::vec3(0, 555, 0), glm::vec3(0, 0, 555), green)); // Left Wall
-    world.add(make_shared<Quad>(glm::vec3(0, 0, 0), glm::vec3(0, 555, 0), glm::vec3(0, 0, 555), red)); // Right Wall
+    world.add(make_shared<Quad>(glm::vec3(0, 0, 0), glm::vec3(0, 555, 0), glm::vec3(0, 0, 555), blue)); // Right Wall
     world.add(make_shared<Quad>(glm::vec3(343, 554, 332), glm::vec3(-130, 0, 0), glm::vec3(0, 0, -105), light)); //Light
     world.add(make_shared<Quad>(glm::vec3(0, 0, 0), glm::vec3(555, 0, 0), glm::vec3(0, 0, 555), white)); // Floor
     world.add(make_shared<Quad>(glm::vec3(555, 555, 555), glm::vec3(-555, 0, 0), glm::vec3(0, 0, -555), white)); // Ceiling
     world.add(make_shared<Quad>(glm::vec3(0, 0, 555), glm::vec3(555, 0, 0), glm::vec3(0, 555, 0), metal)); // Back Wall
+    world.add(make_shared<Quad>(glm::vec3(0, 0, 555), glm::vec3(555, 0, 0), glm::vec3(0, 555, 0), red)); // Behind Camera Wall
 
 
-    world.add(make_shared<Sphere>(glm::vec3(380, 85, 250), 85, blue));
+
+    world.add(make_shared<Sphere>(glm::vec3(380, 300, 250), 85, trans));
     // Boxes
     // Switch for sphere
    /* shared_ptr<Hittable> box1 = Quad::box(glm::vec3(0, 0, 0), glm::vec3(165, 330, 165), white);
@@ -55,16 +58,20 @@ int main() {
         glm::vec3(170, 0, 250),
         glm::vec3(190, 120, 180),
         red);
+
+
+    tetrahedron = make_shared<Translate>(tetrahedron, glm::vec3(60, 40, 220));
     tetrahedron = make_shared<RotateY>(tetrahedron, 25);
-    world.add(make_shared<Translate>(tetrahedron, glm::vec3(20, 320, 10)));
+    world.add(tetrahedron);
+
 
 
     Camera cam;
 
     cam.aspectRatio = 1.0;
     cam.imageWidth = 400;
-    cam.samplesPerPixel = 20;
-    cam.maxDepth = 5;
+    cam.samplesPerPixel = 300;
+    cam.maxDepth = 50;
     cam.background = color(0, 0, 0);
 
     cam.vfov = 40;
