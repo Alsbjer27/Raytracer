@@ -32,17 +32,21 @@ int main() {
     world.add(make_shared<Quad>(glm::vec3(555, 555, 555), glm::vec3(-555, 0, 0), glm::vec3(0, 0, -555), white)); // Ceiling
     world.add(make_shared<Quad>(glm::vec3(0, 0, 555), glm::vec3(555, 0, 0), glm::vec3(0, 555, 0), metal)); // Back Wall
 
+
+    world.add(make_shared<Sphere>(glm::vec3(380, 85, 250), 85, blue));
     // Boxes
     // Switch for sphere
-    shared_ptr<Hittable> box1 = Quad::box(glm::vec3(0, 0, 0), glm::vec3(165, 330, 165), white);
+   /* shared_ptr<Hittable> box1 = Quad::box(glm::vec3(0, 0, 0), glm::vec3(165, 330, 165), white);
     box1 = make_shared<RotateY>(box1, 15);
     box1 = make_shared<Translate>(box1, glm::vec3(265, 0, 295));
-    world.add(box1);
+    world.add(box1);*/
+
+
 
     // Keep but lift higher
     shared_ptr<Hittable> box2 = Quad::box(glm::vec3(0, 0, 0), glm::vec3(165, 165, 165), white);
     box2 = make_shared<RotateY>(box2, -18);
-    box2 = make_shared<Translate>(box2, glm::vec3(130, 0, 65));
+    box2 = make_shared<Translate>(box2, glm::vec3(130, 30, 65));
     world.add(box2);
 
     shared_ptr<Hittable> tetrahedron = Triangle::tetrahedron(
@@ -52,7 +56,7 @@ int main() {
         glm::vec3(190, 120, 180),
         red);
     tetrahedron = make_shared<RotateY>(tetrahedron, 25);
-    world.add(make_shared<Translate>(tetrahedron, glm::vec3(20, 100, 10)));
+    world.add(make_shared<Translate>(tetrahedron, glm::vec3(20, 320, 10)));
 
 
     Camera cam;
@@ -60,7 +64,7 @@ int main() {
     cam.aspectRatio = 1.0;
     cam.imageWidth = 400;
     cam.samplesPerPixel = 20;
-    cam.maxDepth = 10;
+    cam.maxDepth = 5;
     cam.background = color(0, 0, 0);
 
     cam.vfov = 40;
