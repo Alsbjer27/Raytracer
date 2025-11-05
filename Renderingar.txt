@@ -1,0 +1,16 @@
+FinalSceneRender1.ppm
+	cam.aspectRatio = 1.0;
+	cam.imageWidth = 400;
+	cam.samplesPerPixel = 300;
+	cam.maxDepth = 50;
+	cam.background = color(0, 0, 0);
+
+	cam.vfov = 90;
+	cam.lookFrom = glm::vec3(278, 278, -5);
+	cam.lookAt = glm::vec3(278, 278, 0);
+	cam.vup = glm::vec3(0, 1, 0);
+
+	cam.defocusAngle = 0;
+	Time to Render: Approx 1:15 H:M Emil Stationary
+
+	
