@@ -14,3 +14,17 @@ FinalSceneRender1.ppm
 	Time to Render: Approx 1:15 H:M Emil Stationary
 
 	
+FinalSceneRender4.ppm
+	cam.aspectRatio = 1.0;
+	cam.imageWidth = 600;
+	cam.samplesPerPixel = 1000;
+	cam.maxDepth = 60;
+	cam.background = color(0, 0, 0);
+
+	cam.vfov = 70;
+	cam.lookFrom = glm::vec3(278, 278, -5);
+	cam.lookAt = glm::vec3(278, 278, 0);
+	cam.vup = glm::vec3(0, 1, 0);
+
+	cam.defocusAngle = 0;
+	Time to Render: Approx 10:40 H:M Emil Stationary

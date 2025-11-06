@@ -73,9 +73,9 @@ int main() {
     Camera cam;
 
     cam.aspectRatio = 1.0;
-    cam.imageWidth = 200;
-    cam.samplesPerPixel = 400;
-    cam.maxDepth = 20;
+    cam.imageWidth = 600;
+    cam.samplesPerPixel = 1000;
+    cam.maxDepth = 60;
     cam.background = color(0, 0, 0);
 
     cam.vfov = 70;
