@@ -22,6 +22,8 @@ int main() {
     auto green = make_shared<Lambertian>(color(.12, .45, .15));
     auto light = make_shared<DiffuseLight>(color(15, 15, 15));
     auto metal = make_shared<Metal>(color(1.0, 1.0, 1.0), 0.0);
+    auto metalRed = make_shared<Metal>(color(1.0, 0.0, 0.0), 0.3);
+
     auto blue = make_shared<Lambertian>(color(0.1, 0.2, 0.7));
     auto purple = make_shared<Lambertian>(color(0.3, 0.0, 0.5));
     auto trans = make_shared<Dielectric>(1.3);
@@ -37,7 +39,7 @@ int main() {
 
 
 
-    world.add(make_shared<Sphere>(glm::vec3(350, 400, 550), 75, trans));
+    world.add(make_shared<Sphere>(glm::vec3(350, 400, 550), 75, metalRed));
     // Boxes
     // Switch for sphere
    /* shared_ptr<Hittable> box1 = Quad::box(glm::vec3(0, 0, 0), glm::vec3(165, 330, 165), white);
@@ -72,9 +74,9 @@ int main() {
 
     Camera cam;
 
-    cam.aspectRatio = 1.0;
-    cam.imageWidth = 600;
-    cam.samplesPerPixel = 1000;
+    < cam.aspectRatio = 1.0;
+    cam.imageWidth = 400;
+    cam.samplesPerPixel = 500;
     cam.maxDepth = 60;
     cam.background = color(0, 0, 0);
 

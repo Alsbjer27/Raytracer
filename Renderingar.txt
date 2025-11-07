@@ -28,3 +28,19 @@ FinalSceneRender4.ppm
 
 	cam.defocusAngle = 0;
 	Time to Render: Approx 10:40 H:M Emil Stationary
+
+FinalSceneRender5.ppm
+	cam.aspectRatio = 1.0;
+	cam.imageWidth = 400;
+	cam.samplesPerPixel = 500;
+	cam.maxDepth = 60;
+	cam.background = color(0, 0, 0);
+
+	cam.vfov = 70;
+	cam.lookFrom = glm::vec3(278, 278, -5);
+	cam.lookAt = glm::vec3(278, 278, 0);
+	cam.vup = glm::vec3(0, 1, 0);
+
+	cam.defocusAngle = 0;
+	Time to Redner: Approx 3:0 H:M Emil Stationary
+	RedMetallic Sphere
